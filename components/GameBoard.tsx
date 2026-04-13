@@ -2,9 +2,10 @@ import { SNAKES_LADDERS } from '@/lib/utils';
 
 interface GameBoardProps {
   position: number;
+  isAnimating?: boolean;
 }
 
-export default function GameBoard({ position }: GameBoardProps) {
+export default function GameBoard({ position, isAnimating = false }: GameBoardProps) {
   const getBoardLayout = () => {
     const squares = [];
     let squareNumber = 1;
@@ -58,12 +59,13 @@ export default function GameBoard({ position }: GameBoardProps) {
               <div
                 key={squareNumber}
                 className={`
-                  w-12 h-12 flex flex-col items-center justify-center rounded border-2 text-xs font-semibold
+                  w-12 h-12 flex flex-col items-center justify-center rounded border-2 text-xs font-semibold transition-all duration-300
                   ${
                     isCurrentPosition
-                      ? 'bg-blue-500 border-blue-700 text-white'
+                      ? 'bg-blue-500 border-blue-700 text-white shadow-lg scale-110'
                       : 'bg-white border-gray-300 text-gray-700'
                   }
+                  ${isAnimating && isCurrentPosition ? 'animate-pulse' : ''}
                 `}
               >
                 <span className="text-xs">{squareNumber}</span>

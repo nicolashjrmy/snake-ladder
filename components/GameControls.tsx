@@ -8,9 +8,10 @@ interface GameControlsProps {
   onMove: (value: number) => void;
   onReset: () => void;
   gameWon?: boolean;
+  isAnimating?: boolean;
 }
 
-export default function GameControls({ onMove, onReset, gameWon = false }: GameControlsProps) {
+export default function GameControls({ onMove, onReset, gameWon = false, isAnimating = false }: GameControlsProps) {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
@@ -54,12 +55,12 @@ export default function GameControls({ onMove, onReset, gameWon = false }: GameC
           onKeyPress={handleKeyPress}
           placeholder="Enter 1-6"
           className="flex-1"
-          disabled={gameWon}
+          disabled={gameWon || isAnimating}
         />
         <Button
           onClick={handleMove}
           className="bg-blue-600 hover:bg-blue-700"
-          disabled={gameWon}
+          disabled={gameWon || isAnimating}
         >
           Move
         </Button>
