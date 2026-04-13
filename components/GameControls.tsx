@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input';
 interface GameControlsProps {
   onMove: (value: number) => void;
   onReset: () => void;
+  gameWon?: boolean;
 }
 
-export default function GameControls({ onMove, onReset }: GameControlsProps) {
+export default function GameControls({ onMove, onReset, gameWon = false }: GameControlsProps) {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
@@ -53,10 +54,12 @@ export default function GameControls({ onMove, onReset }: GameControlsProps) {
           onKeyPress={handleKeyPress}
           placeholder="Enter 1-6"
           className="flex-1"
+          disabled={gameWon}
         />
         <Button
           onClick={handleMove}
           className="bg-blue-600 hover:bg-blue-700"
+          disabled={gameWon}
         >
           Move
         </Button>
