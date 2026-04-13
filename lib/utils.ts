@@ -25,3 +25,20 @@ export function applySnakesAndLadders(position: number): number {
   }
   return position;
 }
+
+export function getPositionDisplay(position: number): string {
+  const rules: [number, string][] = [
+    [3, 'foo'],
+    [4, 'baz'],
+    [5, 'bar'],
+    [7, 'jazz'],
+    [9, 'huzz'],
+  ];
+
+  const result = rules
+    .filter(([divisor]) => position % divisor === 0)
+    .map(([, label]) => label)
+    .join('');
+
+  return result || position.toString();
+}

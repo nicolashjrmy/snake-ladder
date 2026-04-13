@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import GameBoard from '@/components/GameBoard';
 import GameControls from '@/components/GameControls';
-import { applySnakesAndLadders, SNAKES_LADDERS } from '@/lib/utils';
+import { applySnakesAndLadders, getPositionDisplay} from '@/lib/utils';
 
 export default function Home() {
   const [position, setPosition] = useState(1);
@@ -80,7 +80,7 @@ export default function Home() {
           
           <div className="mt-8 text-center">
             <p className="text-2xl font-semibold text-gray-700">
-              Current Position: <span className="text-blue-600">{position}</span>
+              Current Position: <span className="text-blue-600">{getPositionDisplay(position)}</span>
             </p>
 
             {isAnimating && animationType && (
