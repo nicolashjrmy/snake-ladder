@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import GameBoard from '@/components/GameBoard';
 import GameControls from '@/components/GameControls';
+import { applySnakesAndLadders } from '@/lib/utils';
 
 export default function Home() {
   const [position, setPosition] = useState(1);
@@ -11,7 +12,8 @@ export default function Home() {
   const handleMove = (moveValue: number) => {
     if(gameWon) return;
 
-    const newPosition = position + moveValue;
+    let newPosition = position + moveValue;
+    newPosition = applySnakesAndLadders(newPosition);
 
     if (newPosition >= 100) {
       setPosition(100);

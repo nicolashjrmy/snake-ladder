@@ -1,3 +1,5 @@
+import { SNAKES_LADDERS } from '@/lib/utils';
+
 interface GameBoardProps {
   position: number;
 }
@@ -32,6 +34,15 @@ export default function GameBoard({ position }: GameBoardProps) {
     return squares.reverse();
   };
 
+  const getDestinationFor = (squareNumber: number): number | null => {
+    const match = SNAKES_LADDERS.find(([from]) => from === squareNumber);
+    return match ? match[1] : null;
+  };
+
+  const isSnake = (from: number, to: number): boolean => {
+    return to < from;
+  };
+
   const board = getBoardLayout();
 
   return (
@@ -39,13 +50,15 @@ export default function GameBoard({ position }: GameBoardProps) {
       <div className="grid grid-cols-10 gap-1 bg-gray-200 p-2 rounded">
         {board.map((row) =>
           row.map((squareNumber) => {
+            const destination = getDestinationFor(squareNumber);
             const isCurrentPosition = squareNumber === position;
+            const isSnakeSquare = destination && isSnake(squareNumber, destination);
 
             return (
               <div
                 key={squareNumber}
                 className={`
-                  w-12 h-12 flex items-center justify-center rounded border-2 text-xs font-semibold
+                  w-12 h-12 flex flex-col items-center justify-center rounded border-2 text-xs font-semibold
                   ${
                     isCurrentPosition
                       ? 'bg-blue-500 border-blue-700 text-white'
@@ -53,7 +66,16 @@ export default function GameBoard({ position }: GameBoardProps) {
                   }
                 `}
               >
-                {squareNumber}
+                <span className="text-xs">{squareNumber}</span>
+                {destination && (
+                  <span
+                    className={`text-xs font-bold ${
+                      isSnakeSquare ? 'text-red-600' : 'text-green-600'
+                    }`}
+                  >
+                    {destination}
+                  </span>
+                )}
               </div>
             );
           })
